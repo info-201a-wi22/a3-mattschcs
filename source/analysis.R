@@ -164,19 +164,29 @@ plot_ly(
 #   ) +
 #   coord_map()
 
-total <- dataset %>%
-  select(year,total_prison_pop ) %>%
+total_prision_2010 <- dataset %>%
+  select(year,state, total_prison_pop,state) %>%
+  filter(year == 2010) %>%
   group_by(year) %>%
   summarize(
     total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
   ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
+  pull(total_prison_pop)
+
+
+proportion_Prison_in_state <- dataset %>%
+  select(year,state, total_prison_pop,state) %>%
+  filter(year == 2010) %>%
+  group_by(state) %>%
+  summarize(
+    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
+  ) %>% 
+  mutate(proportion = total_prison_pop/ total_prision_2010)
 
 US_map <- map_data("state")
  ggplot(US_map) +
   geom_polygon(
-     mapping = aes(x = long, y = lat, group = group,  fill = total),
+     mapping = aes(x = long, y = lat, group = group, fill = proportion_Prison_in_state),
      color = "white", 
     size = .1        
   ) +
