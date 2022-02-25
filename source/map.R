@@ -1,19 +1,18 @@
 #A3
-#load the library 
+#load the library
+library(lintr)
 library("maps", warn.conflicts = FALSE)
-library("tidyverse",warn.conflicts = FALSE)
-library("plotly",warn.conflicts = FALSE)
-library("leaflet",warn.conflicts = FALSE)  
-library("ggplot2",warn.conflicts = FALSE)
-library("mapproj",warn.conflicts = FALSE)
+library("tidyverse", warn.conflicts = FALSE)
+library("plotly", warn.conflicts = FALSE)
+library("leaflet", warn.conflicts = FALSE)
+library("ggplot2", warn.conflicts = FALSE)
+library("mapproj", warn.conflicts = FALSE)
 suppressPackageStartupMessages(library("maps"))
 suppressPackageStartupMessages(library("mapproj"))
-
 # load the dataset
-dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",show_col_types = FALSE)
+dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv", show_col_types = FALSE)
 setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
-
-
+lint("../source/map.R")
 total_prision_2010 <- dataset %>%
   select(year, total_prison_pop) %>%
   filter(year == 2010) %>%
@@ -25,21 +24,21 @@ total_prision_2010 <- dataset %>%
 
 
 
-proportion_Prison_in_County <- dataset %>%
-  select(year,fips, total_prison_pop,state,) %>%
+proportion_prison_in_county <- dataset %>%
+  select(year, fips, total_prison_pop) %>%
   filter(year == 2010)  %>%
   group_by(fips) %>%
   summarize(
     total_prison_pop = sum(total_prison_pop, na.rm = TRUE),
   ) %>%
-  mutate(proportion = total_prison_pop/ total_prision_2010)
+  mutate(proportion = total_prison_pop / total_prision_2010)
 
  us_counties <- map_data("county") %>%
-   unite(polyname, region, subregion, sep = ',') %>%
-   left_join(county.fips, by = "polyname" )
+   unite(polyname, region, subregion, sep = ",") %>%
+   left_join(county.fips, by = "polyname")
 
  map_data <- us_counties %>%
-   left_join(proportion_Prison_in_County , by= "fips")
+   left_join(proportion_prison_in_county, by = "fips")
 
  blank_theme <- theme_bw() +
    theme(
@@ -61,7 +60,7 @@ map_chart <- ggplot(map_data) +
      size = .1
    ) +
   coord_map() +
-   scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "yellow", high = "red" ) +
+   scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "yellow", high = "red") +
    labs(fill = "Proportion") +
    blank_theme
 

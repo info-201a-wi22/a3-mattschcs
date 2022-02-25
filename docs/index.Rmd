@@ -28,7 +28,7 @@ library("knitr")
 options(tidyverse.quiet = TRUE)
 source("../source/trend_data.R")
 
-Trend_data
+trend_data
 
 ```
 Since the line chart is practical in showing the trend over time, it is suitable for this situation. The line chart shows the distribution of the prison population in the U.S by race. According to the graph, the prison population is rising until about 2010, and it is slowly decreasing over time. African Americans, having three to four times fewer population than White Americans, have a slightly higher prison population than White Americans. This chart clearly shows the consequences of injustice in America, such as over-policing and the War on Drugs. 
@@ -39,7 +39,7 @@ library("knitr")
 options(tidyverse.quiet = TRUE)
 source("../source/two_var.R")
 
-Two_chart
+two_chart
 
 ```
 
