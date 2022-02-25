@@ -55,3 +55,5 @@ source("../source/map.R")
 
 ```
 
+The map chart
+
