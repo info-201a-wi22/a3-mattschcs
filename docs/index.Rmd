@@ -51,7 +51,7 @@ library("knitr")
 options(tidyverse.quiet = TRUE)
 source("../source/map.R")
 
-
+map_chart
 
 ```
 

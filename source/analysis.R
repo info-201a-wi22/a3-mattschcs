@@ -7,7 +7,7 @@ library("ggplot2",warn.conflicts = FALSE)
 #library(rjson)
 # load the dataset
 dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",show_col_types = FALSE)
-
+setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 
 Name <-c("ratio of black prision to prison population in 2010", "Jail average population 1970- 2018", "ratio of white prision to prison population in 2010", "ratio of prison population to population in 2010", "The range in prison population from 1980 to 2016")
 

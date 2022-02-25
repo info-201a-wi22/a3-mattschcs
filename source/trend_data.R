@@ -7,7 +7,7 @@ library("ggplot2",warn.conflicts = FALSE)
 #library(rjson)
 # load the dataset
 dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",show_col_types = FALSE)
-
+setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
   
 # Trend over time
   
