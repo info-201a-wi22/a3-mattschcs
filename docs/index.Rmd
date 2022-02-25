@@ -1,0 +1,59 @@
+---
+title: "Assignment 3: Data Visualization (incarceration)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+Throughout the decades, social and racial issues have always been a controversial affair in the United States. Operations such as over-policing and the War on Drugs have accelerated the disproportional incarnation. Hence, the purpose of this report is to illustrate the inequality that minorities are experiencing in the justice system. To comprehend more about the subject, I have selected five variables from the dataset: the proportion of African American prison populations and the total prison population in 2010, the average jail population in the U.S. from 1970 to 2018, the proportion of White American prison populations and the total prison population in 2010, the ratio of the prison population and the general population in the United States, and the range in prison population from 1980 to 2016. 
+
+## Summary Statistic
+
+```{r, warning = FALSE, echo=FALSE}
+library("knitr")
+options(tidyverse.quiet = TRUE)
+source("../source/analysis.R")
+
+kable(summary_info)
+```
+
+To start with, the proportion of African American prison populations and the total prison population in 2010 is crucial to know about the effect of the injustice in our justice system because we can use it to compare other racial groups to understand more about the demographic in prison. The average is effective for illustrating the overall jail population across the years. In addition, we can use the proportion of White American prison populations and the total prison population in 2010 as a measure to compare other groups since they are the majority. The ratio of the prison population and the general population in the United States is practical to understand the context of the issues. Finally, the rage is effective for showing the trend over time. 
+
+## Time Trend Chart
+```{r, warning = FALSE, echo=FALSE}
+library("knitr")
+options(tidyverse.quiet = TRUE)
+source("../source/trend_data.R")
+
+Trend_data
+
+```
+Since the line chart is practical in showing the trend over time, it is suitable for this situation. The line chart shows the distribution of the prison population in the U.S by race. According to the graph, the prison population is rising until about 2010, and it is slowly decreasing over time. African Americans, having three to four times fewer population than White Americans according to the variable comparison chart, have a slightly higher prison population than White Americans. This chart clearly shows the consequences of injustice in America, such as over-policing and the War on Drugs. 
+
+## Variable Comparison Chart
+```{r, warning = FALSE, echo=FALSE}
+library("knitr")
+options(tidyverse.quiet = TRUE)
+source("../source/two_var.R")
+
+Two_chart
+
+```
+
+Since a scatter plot is practical in showing the correlation between variables, it is suitable to use it in this situation. According to the graph, African American population is rising, but the African American prison population remains steadily. Even though the user zooms into the chart, African American prison population is decreasing. This chart leads us to reconsider the effectiveness of over-policing and the War on Drugs. 
+
+## Map
+```{r, warning = FALSE, echo=FALSE}
+library("knitr")
+options(tidyverse.quiet = TRUE)
+source("../source/map.R")
+
+
+
+```
+
+The map chart shows the distribution
+
