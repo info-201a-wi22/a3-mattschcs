@@ -1,12 +1,11 @@
 #A3
 #load the library 
-
+library("maps", warn.conflicts = FALSE)
 library("tidyverse",warn.conflicts = FALSE)
 library("plotly",warn.conflicts = FALSE)
 library("leaflet",warn.conflicts = FALSE)  
 library("ggplot2",warn.conflicts = FALSE)
 library("mapproj",warn.conflicts = FALSE)
-library("maps", warn.conflicts = FALSE)
 suppressPackageStartupMessages(library("maps"))
 suppressPackageStartupMessages(library("mapproj"))
 
@@ -58,11 +57,11 @@ proportion_Prison_in_County <- dataset %>%
 map_chart <- ggplot(map_data) +
    geom_polygon(
      mapping = aes(x = long, y = lat, group = group, fill = proportion),
-      color = "white",
+      color = "black",
      size = .1
    ) +
   coord_map() +
-   scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "#132B43", high = "Red" ) +
+   scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "yellow", high = "red" ) +
    labs(fill = "Proportion") +
    blank_theme
 
