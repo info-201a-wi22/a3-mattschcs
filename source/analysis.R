@@ -1,198 +1,116 @@
 #A3
 #load the library 
-library("tidyverse")
-library("plotly")
-library("leaflet")  
-library(ggplot2)
+library("tidyverse",warn.conflicts = FALSE)
+library("plotly",warn.conflicts = FALSE)
+library("leaflet",warn.conflicts = FALSE)  
+library("ggplot2",warn.conflicts = FALSE)
+#library(rjson)
 # load the dataset
-dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
-
-# Trend over time
-afician_American_in_prision <- dataset %>%
-  select(year,black_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    African_prision = sum(black_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-Asian <- dataset %>%
-  select(year,aapi_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    Asian = sum(aapi_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-Latinx <- dataset %>%
-  select(year,latinx_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    Latinx = sum(latinx_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-Native <- dataset %>%
-  select(year,native_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    Native = sum(native_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-White <- dataset %>%
-  select(year,white_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    White = sum(white_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-Other <- dataset %>%
-  select(year,other_race_jail_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    other = sum(other_race_jail_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
-
-total <- dataset %>%
-  select(year,total_prison_pop ) %>%
-  group_by(year) %>%
-  summarize(
-    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1985) %>%
-  filter(year <2017)
+dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",show_col_types = FALSE)
 
 
-combined_data <- left_join(total, afician_American_in_prision, by = "year")
-combined_data <- left_join(combined_data, Asian, by = "year")
-combined_data <- left_join(combined_data, Latinx, by = "year")
-combined_data <- left_join(combined_data, Native, by = "year")
-combined_data <- left_join(combined_data, White, by = "year")
-combined_data <- left_join(combined_data, Other, by = "year")
+Name <-c("ratio of black prision to prison population in 2010", "Jail average population 1970- 2018", "ratio of white prision to prison population in 2010", "ratio of prison population to population in 2010", "The range in prison population from 1980 to 2016")
 
-chart_data <- combined_data %>% 
-  gather(key = compare, value = population, total_prison_pop,African_prision, Asian, Latinx, Native,White, other)
+# 5 variables from the dataset
 
-plot_ly(
-  data = chart_data,     
-  x = ~year, 
-  y = ~population, 
-  color = ~compare, 
-  type = "scatter",
-  mode = "lines"
-) %>% layout(
-  title = "Prison Population by race",
-  xaxis = list(title = 'Year'), 
-  yaxis = list(title = 'Prison population') 
-)
-
-#Two variable graph
-
-White_population <- dataset %>%
-  select(year,white_pop_15to64 ) %>%
-  group_by(year) %>%
-  summarize(
-    White_population = sum(white_pop_15to64, na.rm = TRUE)
-  ) %>%
-  filter(year > 1989) %>%
-  filter(year <2017)
-
-Black_population <- dataset %>%
-  select(year,black_pop_15to64 ) %>%
-  group_by(year) %>%
-  summarize(
-    Black_population = sum(black_pop_15to64, na.rm = TRUE)
-  ) %>%
-  filter(year > 1989) %>%
-  filter(year <2017)
-
-year <- dataset %>% 
-  group_by(year) %>%
-  summarize(
-    prison_population = sum(total_jail_pop, na.rm = TRUE)
-  )
-Two_variable <- left_join(Black_population, White_population, by = "year")
-
-Two_chart_data <- Two_variable %>% 
-  gather(key = compare, value = population, Black_population,  White_population)
-
-plot_ly(
-  data = Two_chart_data,     
-  x = ~year, 
-  y = ~population, 
-  color = ~compare, 
-  type = "scatter"
-) %>% layout(
-  title = "African American and White American population",
-  xaxis = list(title = 'Year'), 
-  yaxis = list(title = 'population') 
-)
-#map char that compare the ratio of total prison to that state 
-
-# state_prison <- dataset %>%
-#   select(year, state, black_jail_pop,aapi_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop,other_race_jail_pop, total_jail_pop ) %>%
-#   filter(year > 2000) %>%
-#   group_by(state) %>%
-#   summarize(
-#     black_jail_pop = sum(black_jail_pop, na.rm = TRUE),
-#     aapi_jail_pop = sum(aapi_jail_pop, na.rm = TRUE),
-#     latinx_jail_pop = sum(latinx_jail_pop, na.rm = TRUE),
-#     native_jail_pop = sum(native_jail_pop, na.rm = TRUE),
-#     white_jail_pop = sum(white_jail_pop, na.rm = TRUE),
-#     other_race_jail_pop = sum(other_race_jail_pop, na.rm = TRUE),
-#     total_jail_pop = sum(total_jail_pop, na.rm = TRUE)
-#   )
-# 
-# state_prison_data <- state_prison %>% 
-#   gather(key = compare, value = population, black_jail_pop, aapi_jail_pop,latinx_jail_pop,native_jail_pop,white_jail_pop,other_race_jail_pop,total_jail_pop )
-# 
-# US_map <- map_data("state")
-# ggplot(US_map) +
-#   geom_polygon(
-#     mapping = aes(x = long, y = lat, group = group),
-#     color = "white", 
-#     size = .1        
-#   ) +
-#   coord_map()
-
-total_prision_2010 <- dataset %>%
-  select(year,state, total_prison_pop,state) %>%
+#1 The proportion of Black prison populations and the total prison population in 2010
+black_prision_population_in_2010 <- dataset %>%
+  select(year, black_prison_pop) %>%
   filter(year == 2010) %>%
-  group_by(year) %>%
-  summarize(
-    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
+  summarise(
+    Black_prison_population = sum(black_prison_pop, na.rm = TRUE)
   ) %>%
-  pull(total_prison_pop)
+  pull(Black_prison_population)
 
 
-proportion_Prison_in_state <- dataset %>%
-  select(year,state, total_prison_pop,state) %>%
+total_prision_population_in_2010 <- dataset %>%
+  select(year, total_prison_pop, black_prison_pop) %>%
   filter(year == 2010) %>%
-  group_by(state) %>%
-  summarize(
-    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
+  summarise(
+    total_sum = sum(total_prison_pop, na.rm = TRUE)
   ) %>% 
-  mutate(proportion = total_prison_pop/ total_prision_2010)
+  pull(total_sum)
 
-US_map <- map_data("state")
- ggplot(US_map) +
-  geom_polygon(
-     mapping = aes(x = long, y = lat, group = group, fill = proportion_Prison_in_state),
-     color = "white", 
-    size = .1        
-  ) +
-  coord_map()
+prop_of_black_prision_pop_in_2010 <- black_prision_population_in_2010 / total_prision_population_in_2010
 
 
+#2 The average of total jail population 1970 - 2018
+total_jail <- dataset %>%
+  select(year, total_jail_pop,state) %>%
+  group_by(year) %>%
+  summarize(
+    all_jail = sum(total_jail_pop, na.rm = TRUE) 
+    
+  ) %>%
+  summarize(
+    all_jail_pop  = sum(all_jail, na.rm = TRUE) 
+  ) %>%
+  pull(all_jail_pop)
 
+  average <- total_jail / (2018-1970)
 
+# The proportion of white prison populations and the total prison population in 2010
+  
+  white_prision_population_in_2010 <- dataset %>%
+    select(year, white_prison_pop) %>%
+    filter(year == 2010) %>%
+    summarise(
+      White_prison_population = sum(white_prison_pop, na.rm = TRUE)
+    ) %>%
+    pull(White_prison_population)
+  
+  proportion_of_white <- white_prision_population_in_2010 / total_prision_population_in_2010
 
+#4 The proportion of the total prison and the total population 
+  
+  total_prison <- dataset %>%
+   select(year, total_prison_pop, total_pop_15to64) %>%
+  group_by(year) %>%
+    summarize(
+      total_prison_pop = sum(total_prison_pop ,na.rm = TRUE)
+    ) %>%
+    summarize(
+      
+      all_prison = sum(total_prison_pop, na.rm = TRUE)
+    ) %>%
+    pull(all_prison)
+  
+  
+  total_population <- dataset %>%
+    select(year, total_prison_pop, total_pop_15to64) %>%
+    group_by(year) %>%
+    summarize(
+      total_pop_15to64 = sum(total_pop_15to64,na.rm=TRUE)
+    ) %>%
+    summarize(
+      all_population = sum(total_pop_15to64,na.rm = TRUE)
+    ) %>%
+    pull(all_population)
+  
+  proportion_pop_pri <- total_prison / total_population
+  
+#5 Variable change the 1980 year and the 2016 year 
+
+  
+  data_in_1980 <- dataset %>%
+  select(year,state, total_prison_pop,state) %>%
+  group_by(year) %>%
+  summarize(
+    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
+  ) %>% filter(year == 1980)%>%
+  pull(total_prison_pop)
+  
+  data_in_2016 <- dataset %>%
+    select(year,state, total_prison_pop,state) %>%
+    group_by(year) %>%
+    summarize(
+      total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
+    ) %>% filter(year == 2016)%>%
+    pull(total_prison_pop)
+  
+  range <- data_in_2016 - data_in_1980 
+  
+  
+  
+  variable <- c(prop_of_black_prision_pop_in_2010, average, proportion_of_white, proportion_pop_pri,range )
+  summary_info <- data.frame(Name, variable)
