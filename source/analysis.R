@@ -64,22 +64,13 @@ total_jail <- dataset %>%
   
   proportion_of_white <- white_prision_population_in_2010 / total_prision_in_2010
 
-#4 The proportion of the total prison and the total population
-  
-  total_prison <- dataset %>%
-   select(year, total_prison_pop, total_pop_15to64) %>%
-  group_by(year) %>%
-    summarize(
-      total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
-    ) %>%
-    summarize(
-      all_prison = sum(total_prison_pop, na.rm = TRUE)
-    ) %>%
-    pull(all_prison)
+#4 The proportion of the total prison and the total population in 2010
   
   
-  total_population <- dataset %>%
+  
+  total_population_in2010 <- dataset %>%
     select(year, total_prison_pop, total_pop_15to64) %>%
+    filter(year == 2010) %>%
     group_by(year) %>%
     summarize(
       total_pop_15to64 = sum(total_pop_15to64, na.rm = TRUE)
@@ -89,25 +80,25 @@ total_jail <- dataset %>%
     ) %>%
     pull(all_population)
   
-  proportion_pop_pri <- total_prison / total_population
+  proportion_pop_pri <- total_prision_in_2010 / total_population_in2010
   
 #5 Variable change the 1980 year and the 2016 year
 
   
   data_in_1980 <- dataset %>%
   select(year, state, total_prison_pop, state) %>%
+    filter(year == 1980) %>%
   group_by(year) %>%
   summarize(
     total_prison_pop = sum(total_prison_pop, na.rm = TRUE)) %>%
-    filter(year == 1980) %>%
   pull(total_prison_pop)
   
   data_in_2016 <- dataset %>%
     select(year, state, total_prison_pop, state) %>%
+    filter(year == 2016) %>%
     group_by(year) %>%
     summarize(
       total_prison_pop = sum(total_prison_pop, na.rm = TRUE)) %>%
-    filter(year == 2016) %>%
     pull(total_prison_pop)
   
   range <- data_in_2016 - data_in_1980
@@ -116,5 +107,3 @@ total_jail <- dataset %>%
   
   variable <- c(prop_of_black_prision_pop_in_2010, average, proportion_of_white, proportion_pop_pri, range)
   summary_info <- data.frame(name, variable)
-
-  

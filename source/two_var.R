@@ -3,7 +3,7 @@
 library(lintr)
 library("tidyverse", warn.conflicts = FALSE)
 library("plotly", warn.conflicts = FALSE)
-library("leaflet", warn.conflicts = FALSE)  
+library("leaflet", warn.conflicts = FALSE)
 library("ggplot2", warn.conflicts = FALSE)
 
 # load the dataset
@@ -13,22 +13,21 @@ setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 lint("../source/two_var.R")
 black_prison_pop <- dataset %>%
   select(year, black_prison_pop) %>%
+  filter(year > 1989) %>%
+  filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
     black_prison_pop = sum(black_prison_pop, na.rm = TRUE)
-  ) %>%
-  filter(year > 1989) %>%
-  filter(year < 2017)
+  )
 
 black_population <- dataset %>%
   select(year, black_pop_15to64) %>%
+  filter(year > 1989) %>%
+  filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
     Black_population = sum(black_pop_15to64, na.rm = TRUE)
-  ) %>%
-  filter(year > 1989) %>%
-  filter(year < 2017)
-
+  )
 
 two_variable <- left_join(black_population, black_prison_pop, by = "year")
 
