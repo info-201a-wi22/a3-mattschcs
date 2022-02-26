@@ -93,7 +93,7 @@ trend_data <- plot_ly(
   type = "scatter",
   mode = "lines"
 ) %>% layout(
-  title = "Prison Population by race",
+  title = "Prison Population by race from 1986 to 2016",
   xaxis = list(title = "Year"),
   yaxis = list(title = "Prison population"),
   legend = list(title = list(text = "<b> Demographic </b>"))
