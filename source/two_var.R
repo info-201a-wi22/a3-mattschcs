@@ -44,6 +44,8 @@ two_chart <- plot_ly(
 ) %>% layout(
   title = "African American population and African American population",
   xaxis = list(title = "Year"),
-  yaxis = list(title = "population")
+  yaxis = list(title = "population"),
+  legend = list(title = list(text = "<b> Type of Population </b>"))
 )
 two_chart
+
