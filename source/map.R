@@ -61,8 +61,8 @@ map_chart <- ggplot(map_data) +
    ) +
   coord_map() +
    scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "yellow", high = "red") +
-   labs(fill = "Proportion") +
+   labs(title = "Proportion of total prison population in county to the entire nation"
+        , fill = "Proportion") +
    blank_theme
 
 map_chart
-
