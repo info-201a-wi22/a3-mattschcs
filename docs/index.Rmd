@@ -57,4 +57,3 @@ map_chart
 ```
 
 Map chart is practical in showing the geometrical distribution of the variables. It is crucial to understand the phenomenon by knowing the prison population in each county compared to the prison population in the United States. By implementing this chart to our analysis, the user can clearly show the effect from each county to the entire nation. According to the chart, counties near the cities have a higher proportion than rural areas. It may be because the compact land use in the city makes it easier to over-policing. This chart clearly shows us the places where over-policing may happen. 
-

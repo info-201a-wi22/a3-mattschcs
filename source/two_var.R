@@ -48,4 +48,3 @@ two_chart <- plot_ly(
   legend = list(title = list(text = "<b> Type of Population </b>"))
 )
 two_chart
-

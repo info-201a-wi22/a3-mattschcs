@@ -9,8 +9,8 @@ library("ggplot2", warn.conflicts = FALSE)
 dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv", show_col_types = FALSE)
 setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 lint("../source/trend_data.R")
+
 # Trend over time
-  
  black_prison <- dataset %>%
   select(year, black_prison_pop) %>%
    filter(year > 1985) %>%
