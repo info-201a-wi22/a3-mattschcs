@@ -40,7 +40,7 @@ proportion_prison_in_county <- dataset %>%
 
  map_data <- us_counties %>%
    left_join(proportion_prison_in_county, by = "fips") %>%
-   filter(fips > 53000 ) %>%
+   filter(fips > 53000) %>%
    filter(fips < 54000)
 
  blank_theme <- theme_bw() +
@@ -68,10 +68,9 @@ map_chart <- ggplot(map_data) +
      , na.value = "white", low = "yellow",
      high = "red") +
    labs(title =
-          "Proportion of total prison population in Washington State County 
+          "Proportion of total prison population in Washington State County
         and Total Prison Population Nationwide"
         , fill = "Proportion") +
    blank_theme
 
 map_chart
-
