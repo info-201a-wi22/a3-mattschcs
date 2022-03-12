@@ -11,28 +11,29 @@ dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarcerat
 setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 #Two variable graph
 lint("../source/two_var.R")
-black_prison_pop <- dataset %>%
-  select(year, black_prison_pop) %>%
+
+black_prison_prop <- dataset %>%
+  select(year, black_prison_pop_rate) %>%
   filter(year > 1989) %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    black_prison_pop = sum(black_prison_pop, na.rm = TRUE)
+    Black = sum(black_prison_pop_rate, na.rm = TRUE)
   )
 
-black_population <- dataset %>%
-  select(year, black_pop_15to64) %>%
+white_prison_prop <- dataset %>%
+  select(year, white_prison_pop_rate) %>%
   filter(year > 1989) %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    Black_population = sum(black_pop_15to64, na.rm = TRUE)
+    White = sum(white_prison_pop_rate, na.rm = TRUE)
   )
 
-two_variable <- left_join(black_population, black_prison_pop, by = "year")
+two_variable <- left_join(white_prison_prop, black_prison_prop, by = "year")
 
 two_chart_data <- two_variable %>%
-  gather(key = compare, value = population,  Black_population, black_prison_pop)
+  gather(key = compare, value = population,  Black, White)
 
 two_chart <- plot_ly(
   data = two_chart_data,
@@ -42,9 +43,10 @@ two_chart <- plot_ly(
   type = "scatter",
   mode   = "markers"
 ) %>% layout(
-  title = "African American population and African American population",
+  title = "Prison Rates between White American and African American",
   xaxis = list(title = "Year"),
   yaxis = list(title = "population"),
   legend = list(title = list(text = "<b> Type of Population </b>"))
 )
 two_chart
+

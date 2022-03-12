@@ -9,10 +9,10 @@ library("ggplot2", warn.conflicts = FALSE)
 dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv", show_col_types = FALSE)
 setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 lint("../source/analysis.R")
-name <- c("ratio of black prision to prison population in 2010",
+name <- c("Ratio of black prision to prison population in 2010",
          "Jail average population 1970- 2018"
-         , "ratio of white prision to prison population in 2010",
-         "ratio of prison population to population in 2010",
+         , "Ratio of white prision to prison population in 2010",
+         "Ratio of prison population to population in 2010",
          "The range in prison population from 1980 to 2016")
 
 # 5 variables from the dataset
@@ -36,7 +36,7 @@ total_prision_in_2010 <- dataset %>%
   ) %>%
   pull(total_sum)
 
-prop_of_black_prision_pop_in_2010 <- black_prision_in_2010 / total_prision_in_2010
+black_prision_prop_in_2010 <- black_prision_in_2010 / total_prision_in_2010
 
 
 #2 The average of total jail population 1970 - 2018
@@ -52,17 +52,19 @@ total_jail <- dataset %>%
   pull(all_jail_pop)
 
   average <- total_jail / (2018 - 1970)
-
-# The proportion of white prison populations and the total prison population in 2010
   
-  white_prision_population_in_2010 <- dataset %>%
+#3 The proportion of white prison populations and the total prison population in 2010
+  
+  white_pris_population_in_2010 <- dataset %>%
     select(year, white_prison_pop) %>%
     filter(year == 2010) %>%
     summarise(
       White_prison_population = sum(white_prison_pop, na.rm = TRUE)) %>%
     pull(White_prison_population)
   
-  proportion_of_white <- white_prision_population_in_2010 / total_prision_in_2010
+  proportion_of_white <-
+    white_pris_population_in_2010 /
+    total_prision_in_2010
 
 #4 The proportion of the total prison and the total population in 2010
   
@@ -105,5 +107,8 @@ total_jail <- dataset %>%
   
   
   
-  variable <- c(prop_of_black_prision_pop_in_2010, average, proportion_of_white, proportion_pop_pri, range)
+  variable <- c(black_prision_prop_in_2010,
+                average, proportion_of_white,
+                proportion_pop_pri, range)
+  
   summary_info <- data.frame(name, variable)

@@ -17,7 +17,7 @@ lint("../source/trend_data.R")
    filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    black_prison_pop = sum(black_prison_pop, na.rm = TRUE)
+    Black = sum(black_prison_pop, na.rm = TRUE)
   )
  
 asian_prison <- dataset %>%
@@ -26,7 +26,7 @@ asian_prison <- dataset %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    asian_prison = sum(aapi_prison_pop, na.rm = TRUE)
+    Asian = sum(aapi_prison_pop, na.rm = TRUE)
   )
 
 latinx_prison <- dataset %>%
@@ -35,7 +35,7 @@ latinx_prison <- dataset %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    latinx_prison = sum(latinx_prison_pop, na.rm = TRUE)
+    Latinx = sum(latinx_prison_pop, na.rm = TRUE)
   )
 
 native_prison <- dataset %>%
@@ -44,7 +44,7 @@ native_prison <- dataset %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    native_prison = sum(native_prison_pop, na.rm = TRUE)
+    Native = sum(native_prison_pop, na.rm = TRUE)
   )
 
 white_prison <- dataset %>%
@@ -53,7 +53,7 @@ white_prison <- dataset %>%
   filter(year < 2017) %>%
   group_by(year) %>%
   summarize(
-    white_prison = sum(white_prison_pop, na.rm = TRUE)
+    White = sum(white_prison_pop, na.rm = TRUE)
   )
 
 other_prison <- dataset %>%
@@ -62,28 +62,25 @@ other_prison <- dataset %>%
   filter(year > 1985) %>%
   filter(year < 2017) %>%
   summarize(
-    other_race_prison_pop = sum(other_race_prison_pop, na.rm = TRUE)
+    `Other Race` = sum(other_race_prison_pop, na.rm = TRUE)
   )
 
-total <- dataset %>%
-  select(year, total_prison_pop) %>%
-  group_by(year) %>%
-  filter(year > 1985) %>%
-  filter(year < 2017) %>%
-  summarize(
-    total_prison_pop = sum(total_prison_pop, na.rm = TRUE)
-  )
-
-
-combined_data <- left_join(total, black_prison, by = "year")
-combined_data <- left_join(combined_data, asian_prison, by = "year")
+combined_data <- left_join(black_prison, asian_prison, by = "year")
 combined_data <- left_join(combined_data, latinx_prison, by = "year")
 combined_data <- left_join(combined_data, native_prison, by = "year")
 combined_data <- left_join(combined_data, white_prison, by = "year")
 combined_data <- left_join(combined_data, other_prison, by = "year")
 
+
 chart_data <- combined_data %>%
-  gather(key = compare, value = population, total_prison_pop, black_prison_pop, asian_prison, latinx_prison, native_prison, white_prison, other_race_prison_pop)
+  gather(key = compare,
+         value = population,
+         Black,
+         Asian,
+         Latinx,
+         Native,
+         White,
+         `Other Race`)
 
 trend_data <- plot_ly(
   data = chart_data,

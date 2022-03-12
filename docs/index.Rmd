@@ -31,10 +31,10 @@ source("../source/trend_data.R")
 trend_data
 
 ```
-Since the line chart is practical in showing the trend over time, it is suitable for this situation. The line chart shows the distribution of the prison population in the U.S by race. According to the graph, the prison population is rising until about 2010, and it is slowly decreasing over time. African Americans, having three to four times fewer population than White Americans, have a slightly higher prison population than White Americans. This chart clearly shows the consequences of injustice in America, such as over-policing and the War on Drugs. 
+Since the line chart is practical in showing the trend over time, it is suitable for this situation. The line chart shows the distribution of the prison population in the U.S by race. Starting from 2013, the African American prison population decreases yearly. The line graph leads us to reconsider the consequences of injustice in America, such as the effectiveness of over-policing, the War on Drugs, and disproportionate incarceration. 
 
 ## Variable Comparison Chart
-```{r, warning = FALSE, echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 library("knitr")
 options(tidyverse.quiet = TRUE)
 source("../source/two_var.R")
@@ -43,7 +43,7 @@ two_chart
 
 ```
 
-Since a scatter plot is practical in showing the correlation between variables, it is suitable to use it in this situation. According to the graph, African American population is rising, but the African American prison population remains steadily. Even though the user zooms into the chart, African American prison population is decreasing. This chart leads us to reconsider the effectiveness of over-policing and the War on Drugs. 
+Since a scatter plot is practical in showing the correlation between variables, it is suitable to use it in this situation. The scatterplot is calculated by extracting the data column of the African American prison population rate and White American prison population rate. Through knowing the prison population rate, we can understand the frequency of incarnation on minorities and the majority. According to the graph, starting from 2006, the prison rate for African Americans decrease yearly. It might be the result of better social programs and educational opportunities for low incomes families since, according to the [Stanford Article](https://ed.stanford.edu/in-the-media/schools-v-prisons-educations-way-cut-prison-population-op-ed-deborah-stipek) , spending more on education would shrink the prison population. Therefore, it leads us to rethink the purpose of the over-policing and War on Drugs.
 
 ## Map
 ```{r, warning = FALSE, echo=FALSE}
@@ -56,4 +56,7 @@ map_chart
 
 ```
 
-Map chart is practical in showing the geometrical distribution of the variables. It is crucial to understand the phenomenon by knowing the prison population in each county compared to the prison population in the United States. By implementing this chart to our analysis, the user can clearly show the effect from each county to the entire nation. According to the chart, counties near the cities have a higher proportion than rural areas. It may be because the compact land use in the city makes it easier to over-policing. This chart clearly shows us the places where over-policing may happen. 
+Map chart is practical in showing the geometrical distribution of the variables. In this analysis, I compared the total prison population in each county in Washington State to the total prison population in the United States. According to the chart, counties near the cities have a higher proportion than rural areas, such as Seattle, Spokane, Olympia, and Tacoma. It may be because the compact land use in the city makes it easier to over-policing. This chart clearly shows us the places where over-policing may happen. 
+
+## References
+- Stipek , D., &amp; Hanson, K. (2014, May 19). Schools v. prisons: Education's the way to cut prison population (op-ed by Deborah Stipek). Stanford Graduate School of Education. Retrieved March 11, 2022, from https://ed.stanford.edu/in-the-media/schools-v-prisons-educations-way-cut-prison-population-op-ed-deborah-stipek 

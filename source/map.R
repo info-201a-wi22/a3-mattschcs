@@ -13,6 +13,7 @@ suppressPackageStartupMessages(library("mapproj"))
 dataset <- read_csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv", show_col_types = FALSE)
 setwd("/Users/matty-so/Desktop/Info201code/a3-mattschcs/docs")
 lint("../source/map.R")
+
 total_prision_2010 <- dataset %>%
   select(year, total_prison_pop) %>%
   filter(year == 2010) %>%
@@ -38,7 +39,9 @@ proportion_prison_in_county <- dataset %>%
    left_join(county.fips, by = "polyname")
 
  map_data <- us_counties %>%
-   left_join(proportion_prison_in_county, by = "fips")
+   left_join(proportion_prison_in_county, by = "fips") %>%
+   filter(fips > 53000 ) %>%
+   filter(fips < 54000)
 
  blank_theme <- theme_bw() +
    theme(
@@ -60,9 +63,15 @@ map_chart <- ggplot(map_data) +
      size = .1
    ) +
   coord_map() +
-   scale_fill_continuous(limit = c(0, max(map_data$proportion)), na.value = "white", low = "yellow", high = "red") +
-   labs(title = "Proportion of total prison population in county to the entire nation"
+   scale_fill_continuous(
+     limit = c(0, max(map_data$proportion))
+     , na.value = "white", low = "yellow",
+     high = "red") +
+   labs(title =
+          "Proportion of total prison population in Washington State County 
+        and Total Prison Population Nationwide"
         , fill = "Proportion") +
    blank_theme
 
 map_chart
+
